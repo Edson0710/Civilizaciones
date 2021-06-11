@@ -1,8 +1,10 @@
 #ifndef CIVILIZACION_H
 #define CIVILIZACION_H
 
+#include "aldeano.h"
 #include <iostream>
 #include <iomanip>
+#include <list>
 using namespace std;
 
 class Civilizacion{
@@ -11,6 +13,7 @@ class Civilizacion{
         int ubicacion_x;
         int ubicacion_y;
         int puntuacion;
+        list<Aldeano> aldeanos;
     public:
         Civilizacion();
         Civilizacion(const string &nombre, int ubicacion_x, int ubicacion_y, int puntuacion);
@@ -23,6 +26,15 @@ class Civilizacion{
         int getUbicacionY();
         void setPuntuacion(int v);
         int getPuntuacion();
+
+        //  Aldeanos
+        void menu();
+        void agregarInicio(const Aldeano &a);
+        void agregarFinal(const Aldeano &a);
+        void eliminarNombre(const string &nombre);
+        void eliminarSalud(int salud);
+        void eliminarEdad();
+        void mostrar();
 
         friend ostream& operator<<(ostream &out, const Civilizacion &c){
             out << left;

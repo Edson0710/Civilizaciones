@@ -25,7 +25,7 @@ class Videogame{
         void ordenarUbicacionY();
         void ordenarPuntuacion();
         void eliminar(const Civilizacion &c);
-        Civilizacion* buscar(const Civilizacion &c);
+        void buscar(const Civilizacion &c);
         void modificar(const Civilizacion &c);
         size_t total();
 

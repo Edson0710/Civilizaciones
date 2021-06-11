@@ -134,13 +134,7 @@ int main(){
             case 9:{
                 Civilizacion c, *ptr;
                 cin >> c; cin.ignore();
-                ptr = v.buscar(c);
-                if(ptr == nullptr){
-                    cout << "No encontrado" << endl;
-                } else{
-                    v.encabezados();
-                    cout << *ptr << endl;
-                }
+                v.buscar(c);
                 getch();
                 break;
             }
@@ -154,6 +148,8 @@ int main(){
             case 11:
                 v.resumen();
                 getch();
+                break;
+            case 0:
                 break;
             default:
                 cout << "Opcion no valida." << endl;

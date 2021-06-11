@@ -67,13 +67,16 @@ void Videogame::ordenarPuntuacion(){
     [](Civilizacion c1, Civilizacion c2){return c1.getPuntuacion() > c2.getPuntuacion();});
 }
 
-Civilizacion* Videogame::buscar(const Civilizacion &c){
+void Videogame::buscar(const Civilizacion &c){
     auto it = find(civ.begin(), civ.end(), c);
-    if (it == civ.end()){
-        return nullptr;
+    if (it != civ.end()){
+        encabezados();
+        cout << *it;
+        Civilizacion &c = *it;
+        c.menu();
     }
     else{
-        return &(*it);
+        cout << "No encontrado." << endl;
     }
 }
 
