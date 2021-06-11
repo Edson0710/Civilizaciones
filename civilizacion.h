@@ -34,6 +34,9 @@ class Civilizacion{
         void eliminarNombre(const string &nombre);
         void eliminarSalud(int salud);
         void eliminarEdad();
+        void ordenarNombre();
+        void ordenarEdad();
+        void ordenarSalud();
         void mostrar();
 
         friend ostream& operator<<(ostream &out, const Civilizacion &c){

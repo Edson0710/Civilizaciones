@@ -14,7 +14,7 @@ class Aldeano{
     public:
         Aldeano(){}
         void setNombre(const string &nombre);
-        string getNombre();
+        string getNombre() const;
         void setEdad(size_t edad);
         size_t getEdad() const;
         void setGenero(char genero);

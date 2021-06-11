@@ -4,7 +4,7 @@ void Aldeano::setNombre(const string &nombre){
     this -> nombre = nombre;
 }
 
-string Aldeano::getNombre(){
+string Aldeano::getNombre() const{
     return nombre;
 }
 

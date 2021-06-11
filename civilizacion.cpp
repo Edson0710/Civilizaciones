@@ -53,6 +53,7 @@ void Civilizacion::eliminarNombre(const string &nombre){
         Aldeano &a = *it;
         if(nombre == a.getNombre()){
             aldeanos.erase(it);
+            cout << "Eliminado" << endl;
             break;
         }
     }
@@ -60,6 +61,7 @@ void Civilizacion::eliminarNombre(const string &nombre){
 
 void Civilizacion::eliminarSalud(int salud){
     aldeanos.remove_if([salud](const Aldeano &a){return a.getSalud() < salud;});
+    cout << "Eliminados" << endl;
 }
 
 void Civilizacion::mostrar(){
@@ -74,6 +76,19 @@ bool comparador(const Aldeano &a){
 
 void Civilizacion::eliminarEdad(){
     aldeanos.remove_if(comparador);
+    cout << "Eliminados" << endl;
+}
+
+void Civilizacion::ordenarNombre(){
+    aldeanos.sort([](const Aldeano &a1, const Aldeano &a2){return a1.getNombre() < a2.getNombre();});
+}
+
+void Civilizacion::ordenarEdad(){
+    aldeanos.sort([](const Aldeano &a1, const Aldeano &a2){return a1.getEdad() > a2.getEdad();});
+}
+
+void Civilizacion::ordenarSalud(){
+    aldeanos.sort([](const Aldeano &a1, const Aldeano &a2){return a1.getSalud() > a2.getSalud();});
 }
 
 
@@ -85,6 +100,7 @@ void Civilizacion::menu(){
         cout << "Aldeanos de " << getNombre() << ": " << endl
             << "1) Agregar aldeano" << endl
             << "2) Eliminar aldeano" << endl
+            << "3) Clasificaar" << endl
             << "6) Mostrar" << endl
             << "0) salir" << endl
             << "Opcion: ";
@@ -131,6 +147,31 @@ void Civilizacion::menu(){
                 }
                 else if(op == 3){
                     eliminarEdad();
+                }
+                else{
+                    cout << "Opcion no valida." << endl;
+                }
+                getch();
+                break;
+            }
+            case 3:{
+                int op;
+                cout << "1) Por nombre" << endl
+                     << "2) Por edad" << endl
+                     << "3) Por salud" << endl
+                     << "Opcion: ";
+                cin >> op; cin.ignore();
+                if(op == 1){
+                    ordenarNombre();
+                    cout << "Ordenado por nombre" << endl;
+                }
+                else if(op == 2){
+                    ordenarEdad();
+                    cout << "Ordenado por edad" << endl;
+                }
+                else if(op == 3){
+                    ordenarSalud();
+                    cout << "Ordenado por salud" << endl;
                 }
                 else{
                     cout << "Opcion no valida." << endl;
