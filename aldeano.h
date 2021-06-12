@@ -24,10 +24,10 @@ class Aldeano{
 
         friend ostream& operator<<(ostream &out, const Aldeano &a){
             out << left;
-            out << setw(10) << a.nombre;
-            out << setw(4) << a.edad;
-            out << setw(4) << a.genero;
-            out << setw(4) << a.salud;
+            out << setw(20) << a.nombre;
+            out << setw(6) << a.edad;
+            out << setw(6) << a.genero;
+            out << setw(6) << a.salud;
             return out;
         }
 

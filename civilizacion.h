@@ -29,6 +29,7 @@ class Civilizacion{
 
         //  Aldeanos
         void menu();
+        void encabezados();
         void agregarInicio(const Aldeano &a);
         void agregarFinal(const Aldeano &a);
         void eliminarNombre(const string &nombre);
@@ -37,6 +38,8 @@ class Civilizacion{
         void ordenarNombre();
         void ordenarEdad();
         void ordenarSalud();
+        void buscar(const string &nombre);
+        void modificar(const string &nombre);
         void mostrar();
 
         friend ostream& operator<<(ostream &out, const Civilizacion &c){

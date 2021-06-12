@@ -10,6 +10,14 @@ Civilizacion::Civilizacion(const string &nombre, int ubicacion_x, int ubicacion_
     this -> puntuacion = puntuacion;
 }
 
+void Civilizacion::encabezados(){
+    cout << left;
+    cout << setw(20) << "NOMBRE";
+    cout << setw(6) << "EDAD";
+    cout << setw(6) << "SEXO";
+    cout << setw(6) << "SALUD" << endl;
+}
+
 void Civilizacion::setNombre(const string &v){
     nombre = v;
 }
@@ -65,6 +73,7 @@ void Civilizacion::eliminarSalud(int salud){
 }
 
 void Civilizacion::mostrar(){
+    encabezados();
     for(auto it = aldeanos.begin(); it != aldeanos.end(); it++){
         cout << *it << endl;
     }
@@ -91,6 +100,70 @@ void Civilizacion::ordenarSalud(){
     aldeanos.sort([](const Aldeano &a1, const Aldeano &a2){return a1.getSalud() > a2.getSalud();});
 }
 
+void Civilizacion::buscar(const string &nombre){
+    auto it = aldeanos.begin();
+    for(it; it != aldeanos.end(); it++){
+        Aldeano &a = *it;
+        if(nombre == a.getNombre()){
+            encabezados();
+            cout << *it;
+            break;
+        }
+    }
+    if(it == aldeanos.end()){
+        cout << "No se ha encontrado el aldeano" << endl;
+    }
+}
+
+void Civilizacion::modificar(const string &nombre){
+    int opc, salud;
+    string mnombre;
+    char genero;
+    size_t edad;
+    auto it = aldeanos.begin();
+    for(it; it != aldeanos.end(); it++){
+        Aldeano &a = *it;
+        if(nombre == a.getNombre()){
+            encabezados();
+            cout << *it;
+            cout << endl;
+            cout << "1) Nombre" << endl
+                 << "2) Edad" << endl
+                 << "3) Genero" << endl
+                 << "4) Salud" << endl
+                 << "Modificar: ";
+            cin >> opc; cin.ignore();
+            if(opc == 1){
+                cout << "nuevo Nombre: ";
+                getline(cin, mnombre);
+                a.setNombre(mnombre);
+            }
+            else if(opc == 2){
+                cout << "nueva Edad: ";
+                cin >> edad; cin.ignore();
+                a.setEdad(edad);
+            }
+            else if(opc == 3){
+                cout << "nuevo Genero: ";
+                cin >> genero; cin.ignore();
+                a.setGenero(genero);
+            }
+            else if(opc == 4){
+                cout << "nueva Salud: ";
+                cin >> salud; cin.ignore();
+                a.setSalud(salud);
+            }
+            else{
+                cout << "Opcion no valida" << endl;
+            }
+            break;
+        }
+    }
+    if(it == aldeanos.end()){
+        cout << "No se ha encontrado el aldeano" << endl;
+    }
+}
+
 
 void Civilizacion::menu(){
     int opc;
@@ -100,7 +173,9 @@ void Civilizacion::menu(){
         cout << "Aldeanos de " << getNombre() << ": " << endl
             << "1) Agregar aldeano" << endl
             << "2) Eliminar aldeano" << endl
-            << "3) Clasificaar" << endl
+            << "3) Clasificar aldeanos" << endl
+            << "4) Buscar aldeano" << endl
+            << "5) Modificar aldeano" << endl
             << "6) Mostrar" << endl
             << "0) salir" << endl
             << "Opcion: ";
@@ -176,6 +251,22 @@ void Civilizacion::menu(){
                 else{
                     cout << "Opcion no valida." << endl;
                 }
+                getch();
+                break;
+            }
+            case 4:{
+                string bnombre;
+                cout << "Nombre: ";
+                getline(cin, bnombre);
+                buscar(bnombre);
+                getch();
+                break;
+            } 
+            case 5:{
+                string bnombre;
+                cout << "Nombre: ";
+                getline(cin, bnombre);
+                modificar(bnombre);
                 getch();
                 break;
             }
