@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <list>
+#include <fstream>
 using namespace std;
 
 class Civilizacion{
@@ -41,6 +42,10 @@ class Civilizacion{
         void buscar(const string &nombre);
         void modificar(const string &nombre);
         void mostrar();
+
+        //  Respaldo
+        void respaldar_aldeanos();
+        void recuperar_aldeanos();
 
         friend ostream& operator<<(ostream &out, const Civilizacion &c){
             out << left;

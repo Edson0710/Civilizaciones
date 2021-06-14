@@ -18,6 +18,8 @@ int main(){
              << "9) Buscar" << endl
              << "10) Modificar" << endl
              << "11) Resumen" << endl
+             << "12) Respaldar" << endl
+             << "13) Recuperar" << endl
              << "0) Salir" << endl
              << "Opcion: ";
         cin >> opc; cin.ignore();
@@ -147,6 +149,16 @@ int main(){
             }
             case 11:
                 v.resumen();
+                getch();
+                break;
+            case 12:
+                v.respaldar();
+                cout << "Respaldo exitoso" << endl;
+                getch();
+                break;
+            case 13:
+                v.recuperar();
+                cout << "Recuperacion exitosa" << endl;
                 getch();
                 break;
             case 0:

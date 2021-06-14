@@ -138,3 +138,34 @@ void Videogame::modificar(const Civilizacion &c){
 size_t Videogame::total(){
     return civ.size();
 }
+
+void Videogame::respaldar()
+{   
+    ofstream archivo("respaldos/civilizaciones.txt", ios::out);
+
+    for (int i = 0; i < civ.size(); ++i) {
+        Civilizacion &c = civ[i];
+        archivo << c.getNombre() << endl;
+        c.respaldar_aldeanos();
+    }
+    archivo.close();
+}
+
+void Videogame::recuperar(){
+    ifstream archivo("respaldos/civilizaciones.txt");
+    if(archivo.is_open()){
+        while (true){
+            Civilizacion c;
+            string temp;
+            getline(archivo, temp); 
+            if(archivo.eof()){
+                break;
+            }
+            c.setNombre(temp);
+            c.recuperar_aldeanos();
+            agregarCivilizacion(c);
+        }
+        
+    }
+    archivo.close();
+}

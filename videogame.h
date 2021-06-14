@@ -28,6 +28,10 @@ class Videogame{
         void buscar(const Civilizacion &c);
         void modificar(const Civilizacion &c);
         size_t total();
+        
+        //  Respaldo
+        void respaldar();
+        void recuperar();
 
         friend Videogame& operator<<(Videogame &v, const Civilizacion &c){
         v.agregarCivilizacion(c);

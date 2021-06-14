@@ -1,7 +1,11 @@
 #include "civilizacion.h"
 #include <conio.h>
 
-Civilizacion::Civilizacion(){}
+Civilizacion::Civilizacion(){
+    puntuacion = 0;
+    ubicacion_x = 0;
+    ubicacion_y = 0;
+}
 
 Civilizacion::Civilizacion(const string &nombre, int ubicacion_x, int ubicacion_y, int puntuacion){
     this -> nombre = nombre;
@@ -277,3 +281,44 @@ void Civilizacion::menu(){
         }
     }while(opc != 0);
 }
+
+void Civilizacion::respaldar_aldeanos(){
+    ofstream archivo("respaldos/" + getNombre() + ".txt", ios::out);
+
+    for(auto it = aldeanos.begin(); it != aldeanos.end(); it++){
+        Aldeano &a = *it;
+        archivo << a.getNombre() << endl;
+        archivo << a.getEdad() << endl;
+        archivo << a.getGenero() << endl;
+        archivo << a.getSalud() << endl;
+    }
+    archivo.close();
+}
+
+void Civilizacion::recuperar_aldeanos(){
+    ifstream archivo("respaldos/" + getNombre() + ".txt");
+    if(archivo.is_open()){
+        while (true){
+            Aldeano a;
+            string temp;
+            int tempInt;
+            getline(archivo, temp);  // Nombre
+            a.setNombre(temp);
+            if(archivo.eof()){
+                break;
+            }
+            getline(archivo,temp);  // Edad
+            tempInt = stoi(temp);
+            a.setEdad(tempInt);
+            getline(archivo, temp); // Genero
+            a.setGenero(temp[0]);
+            getline(archivo, temp); // Salud
+            tempInt = stoi(temp);
+            a.setSalud(tempInt);
+            agregarFinal(a);
+        }
+        
+    }
+    archivo.close();
+}
+
