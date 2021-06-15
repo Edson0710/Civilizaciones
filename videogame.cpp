@@ -146,6 +146,9 @@ void Videogame::respaldar()
     for (int i = 0; i < civ.size(); ++i) {
         Civilizacion &c = civ[i];
         archivo << c.getNombre() << endl;
+        archivo << c.getUbicacionX() << endl;
+        archivo << c.getUbicacionY() << endl;
+        archivo << c.getPuntuacion() << endl;
         c.respaldar_aldeanos();
     }
     archivo.close();
@@ -157,11 +160,21 @@ void Videogame::recuperar(){
         while (true){
             Civilizacion c;
             string temp;
+            int tempInt;
             getline(archivo, temp); 
             if(archivo.eof()){
                 break;
             }
             c.setNombre(temp);
+            getline(archivo, temp); 
+            tempInt = stoi(temp);
+            c.setUbicacionX(tempInt);
+            getline(archivo, temp); 
+            tempInt = stoi(temp);
+            c.setUbicacionY(tempInt);
+            getline(archivo, temp); 
+            tempInt = stoi(temp);
+            c.setPuntuacion(tempInt);
             c.recuperar_aldeanos();
             agregarCivilizacion(c);
         }

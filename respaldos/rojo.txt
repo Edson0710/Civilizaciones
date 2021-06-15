@@ -6,3 +6,11 @@ priscila
 21
 f
 110
+ivan
+21
+m
+105
+andres
+20
+m
+95
