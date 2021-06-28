@@ -22,6 +22,25 @@ void Civilizacion::encabezados(){
     cout << setw(6) << "SALUD" << endl;
 }
 
+void Civilizacion::encabezadosBarcos(){
+    cout << left;
+    cout << setw(4) << "ID";
+    cout << setw(6) << "FUEL";
+    cout << setw(6) << "VEL";
+    cout << setw(6) << "ARMOR";
+    cout << setw(6) << "GRRS" << endl;
+}
+
+void Civilizacion::encabezadosGuerreros(){
+    cout << left;
+    cout << setw(4) << "ID";
+    cout << setw(6) << "SALD";
+    cout << setw(6) << "FRZA";
+    cout << setw(6) << "ESCD";
+    cout << setw(6) << "TIPO" << endl;
+}
+
+
 void Civilizacion::setNombre(const string &v){
     nombre = v;
 }
@@ -168,19 +187,211 @@ void Civilizacion::modificar(const string &nombre){
     }
 }
 
+void Civilizacion::agregarBarco(Barco *b){
+     puerto.push_back(b);
+}
+
+void Civilizacion::capturarBarco(){
+    size_t id;
+    double combustible;
+    Barco *b = new Barco();
+
+    cout << "Id: ";
+    cin >> id;
+    b -> setId(id);
+
+    cout << "Combustible: ";
+    cin >> combustible;
+    b -> setCombustible(combustible);
+
+    agregarBarco(b);
+}
+
+void Civilizacion::mostrarBarcos(){
+    encabezadosBarcos();
+    for(auto const &e : puerto){
+        cout << *e << endl;
+    }
+}
+
+void Civilizacion::capturarGuerrero(Barco &b){
+    size_t id, salud, tipo;
+    float fuerza, escudo;
+    Guerrero g;
+    cout << "Id: ";
+    cin >> id;
+    g.setId(id);
+    cout << "Salud: ";
+    cin >> salud;
+    g.setSalud(salud);
+    cout << "Fuerza: ";
+    cin >> fuerza;
+    g.setFuerza(fuerza);
+    cout << "Escudo: ";
+    cin >> escudo;
+    g.setEscudo(escudo);
+    cout << "1.lancero\t2.arquero\t3.paladin\t4.caballero\nTipo: ";
+    cin >> tipo;
+    if(tipo == 1){g.setTipo("lancero");}
+    else if(tipo == 2){g.setTipo("arquero");}
+    else if(tipo == 3){g.setTipo("paladin");}
+    else if(tipo == 4){g.setTipo("caballero");}
+    else{cout<<"Opcion no valida, no se agrega."; getch(); return;}
+    b.agregarGuerrero(g);
+}
+
+void Civilizacion::eliminarGuerrero(Barco &b){
+    b.eliminarGuerrero();
+}
+
+void Civilizacion::ultimoGuerrero(Barco &b){
+    encabezadosGuerreros();
+    cout << b.tope();
+}
+
+void Civilizacion::mostrarGuerreros(Barco &b){
+    encabezadosGuerreros();
+    b.mostrar();
+}
+
+void Civilizacion::buscarBarco(size_t id){
+    int opc;
+    auto it = puerto.begin();
+    for(it; it != puerto.end(); it++){
+        Barco &b = **it;
+        if(id == b.getId()){
+            encabezadosBarcos();
+            cout << b;
+            cout << endl;
+            cout << "1) Agregar guerrero" << endl
+                 << "2) Eliminar guerrero" << endl
+                 << "3) Mostrar ultimo guerrero" << endl
+                 << "4) Mostrar guerreros" << endl
+                 << "Opcion: ";
+            cin >> opc; cin.ignore();
+            if(opc == 1){
+                capturarGuerrero(b);
+            }
+            else if(opc == 2){
+                if(!b.vacia()){
+                    eliminarGuerrero(b);
+                    cout << "Guerrero eliminado" << endl;
+                }
+                else{
+                    cout << "No hay elementos en la pila" << endl;
+                }
+            }
+            else if(opc == 3){
+                if(!b.vacia()){
+                    ultimoGuerrero(b);
+                }
+                else{
+                    cout << "No hay elementos en la pila" << endl;
+                }
+            }
+            else if(opc == 4){
+                mostrarGuerreros(b);
+            }
+            else{
+                cout << "Opcion no valida" << endl;
+            }
+            break;
+        }
+    }
+    if(it == puerto.end()){
+        cout << "No se ha encontrado el barco" << endl;
+    }
+}
+
+void Civilizacion::eliminarBarcoId(size_t id){
+    puerto.remove_if([id](Barco* b){
+        if(b->getId() == id){
+            delete b;
+            cout << "Barco eliminado" << endl;
+            return true;
+        }
+        else{
+            return false;
+        }
+    });
+}
+
+void Civilizacion::eliminarBarcoCombustible(float combustible){
+    puerto.remove_if([combustible](Barco* b){
+        if(b->getCombustible() < combustible){
+            delete b;
+            cout << "Barco eliminado" << endl;
+            return true;
+        }
+        else{
+            return false;
+        }
+    });
+}
+
+void Civilizacion::menuBarcos(){
+    int opc;
+        do{
+        system("cls");
+            cout << "Menu Barcos " << endl
+                << "1) Agregar Barco" << endl
+                << "2) Mostrar Barcos" << endl
+                << "3) Buscar Barcos" << endl
+                << "4) Eliminar por id" << endl
+                << "5) Eliminar por combustible" << endl
+                << "0) salir" << endl
+                << "Opcion: ";
+            cin >> opc; cin.ignore();
+            switch(opc){
+                case 1:
+                    capturarBarco();
+                    getch();
+                    break;
+                case 2:
+                    mostrarBarcos();
+                    getch();
+                    break;
+                case 3:{
+                    size_t id;
+                    cout << "Id del barco a buscar: ";
+                    cin >> id;
+                    buscarBarco(id);
+                    getch();
+                    break;
+                case 4:{
+                    size_t id;
+                    cout << "Id del barco a eliminar: ";
+                    cin >> id;
+                    eliminarBarcoId(id);
+                    getch();
+                    break;
+                }
+                case 5:{
+                    float combustible;
+                    cout << "Eliminar barcos con combustible menor a: ";
+                    cin >> combustible;
+                    eliminarBarcoCombustible(combustible);
+                    getch();
+                    break;
+                }
+                }
+            }
+    }while(opc != 0);
+}
 
 void Civilizacion::menu(){
     int opc;
     getch();
     do{
         system("cls");
-        cout << "Aldeanos de " << getNombre() << ": " << endl
+        cout << "Menu de " << getNombre() << ": " << endl
             << "1) Agregar aldeano" << endl
             << "2) Eliminar aldeano" << endl
             << "3) Clasificar aldeanos" << endl
             << "4) Buscar aldeano" << endl
             << "5) Modificar aldeano" << endl
-            << "6) Mostrar" << endl
+            << "6) Mostrar aldeanos" << endl
+            << "7) Administrar barcos" << endl
             << "0) salir" << endl
             << "Opcion: ";
         cin >> opc; cin.ignore();
@@ -277,6 +488,9 @@ void Civilizacion::menu(){
             case 6:
                 mostrar();
                 getch();
+                break;
+            case 7:
+                menuBarcos();
                 break;
         }
     }while(opc != 0);

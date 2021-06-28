@@ -2,6 +2,7 @@
 #define CIVILIZACION_H
 
 #include "aldeano.h"
+#include "barco.h"
 #include <iostream>
 #include <iomanip>
 #include <list>
@@ -15,6 +16,7 @@ class Civilizacion{
         int ubicacion_y;
         int puntuacion;
         list<Aldeano> aldeanos;
+        list<Barco*> puerto;
     public:
         Civilizacion();
         Civilizacion(const string &nombre, int ubicacion_x, int ubicacion_y, int puntuacion);
@@ -31,6 +33,8 @@ class Civilizacion{
         //  Aldeanos
         void menu();
         void encabezados();
+        void encabezadosBarcos();
+        void encabezadosGuerreros();
         void agregarInicio(const Aldeano &a);
         void agregarFinal(const Aldeano &a);
         void eliminarNombre(const string &nombre);
@@ -46,6 +50,19 @@ class Civilizacion{
         //  Respaldo
         void respaldar_aldeanos();
         void recuperar_aldeanos();
+
+        //  Barcos
+        void menuBarcos();
+        void agregarBarco(Barco *b);
+        void capturarBarco();
+        void mostrarBarcos();
+        void buscarBarco(size_t id);
+        void eliminarBarcoId(size_t id);
+        void eliminarBarcoCombustible(float combustible);
+        void capturarGuerrero(Barco &b);
+        void eliminarGuerrero(Barco &b);
+        void ultimoGuerrero(Barco &b);
+        void mostrarGuerreros(Barco &b);
 
         friend ostream& operator<<(ostream &out, const Civilizacion &c){
             out << left;

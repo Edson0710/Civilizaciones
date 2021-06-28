@@ -24,10 +24,13 @@ void Videogame::encabezados(){
 }
 
 void Videogame::resumen(){
-    encabezados();
+    
     for(size_t i = 0; i < civ.size(); i++){
         Civilizacion &c = civ[i];
+        cout << "--------------------------------" << endl;
+        encabezados();
         cout << c;
+        c.mostrarBarcos();
     }
 }
 
